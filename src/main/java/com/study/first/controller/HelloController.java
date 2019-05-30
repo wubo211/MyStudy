@@ -1,5 +1,7 @@
 package com.study.first.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,9 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HelloController {
 
+    private static Logger logger = LoggerFactory.getLogger(HelloController.class);
     @RequestMapping(value = "/hello")
     public ModelAndView hello(){
-        System.out.println("hello 被调用");
+        logger.info("hello 被调用");
+        logger.debug("debug 生效");
+        logger.error("error 生效");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("message","hello world");
         modelAndView.setViewName("/WEB-INF/content/welcome.jsp");
