@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../../js/common/jquery-1.11.3.min.js"></script>
+        <title>ajax()方法的参数说明</title>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>参数</td>
+                <td>数据类型</td>
+                <td>说明</td>
+            </tr>
+            <tr>
+                <td>async</td>
+                <td>Boolean</td>
+                <td>设置是否异步请求。默认为true,即所有请求均为异步请求。如果需要发送同步请求，设置为false。
+                    注意，同步请求将锁住浏览器，用户其他操作必须等待请求完成才可以执行。</td>
+            </tr>
+        </table>
+    </body>
+</html>
