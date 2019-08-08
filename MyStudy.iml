@@ -53,5 +53,6 @@
     <orderEntry type="library" name="Maven: com.sun.jdmk:jmxtools:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jmx:jmxri:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: jline:jline:0.9.94" level="project" />
+    <orderEntry type="library" name="Maven: com.101tec:zkclient:0.10" level="project" />
   </component>
 </module>
