@@ -15,13 +15,22 @@ import java.util.concurrent.TimeUnit;
 
 public class ZkConfigClient implements Runnable
 {
+    private String clientName;
     private String nodePath = "/commConfig";
     private CommonConfig commonConfig;
-    private ZkClient zkClient = new ZkClient("127.0.0.1:2181");
+    private ZkClient zkClient = new ZkClient("192.168.28.127:2181");
+
+    public ZkConfigClient() {
+    }
+
+    public ZkConfigClient(String clientName) {
+        this.clientName = clientName;
+    }
+
     @Override
     public void run() {
         while (!zkClient.exists(nodePath)){
-            System.out.println("配置节点不存在");
+            System.out.println(clientName+":配置节点不存在");
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
@@ -29,12 +38,12 @@ public class ZkConfigClient implements Runnable
             }
         }
         this.commonConfig = (CommonConfig)zkClient.readData(nodePath);
-        System.out.println(commonConfig.toString());
+        System.out.println(clientName+":"+commonConfig.toString());
         zkClient.subscribeDataChanges(nodePath, new IZkDataListener() {
             @Override
             public void handleDataChange(String s, Object o) throws Exception {
                 if (s.equals(nodePath)){
-                    System.out.println("节点:"+nodePath+",数据更新:"+o.toString());
+                    System.out.println(clientName+":节点:"+nodePath+",数据更新:"+o.toString());
                     commonConfig = (CommonConfig) o;
                 }
             }
@@ -42,7 +51,7 @@ public class ZkConfigClient implements Runnable
             @Override
             public void handleDataDeleted(String s) throws Exception {
                 if (s.equals(nodePath)){
-                    System.out.println("节点:"+nodePath+",被删除了");
+                    System.out.println(clientName+":节点:"+nodePath+",被删除了");
                 }
             }
         });
@@ -51,8 +60,8 @@ public class ZkConfigClient implements Runnable
 
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(3);
-        executorService.submit(new ZkConfigClient());
-        executorService.submit(new ZkConfigClient());
-        executorService.submit(new ZkConfigClient());
+        executorService.submit(new ZkConfigClient("客户端1"));
+        executorService.submit(new ZkConfigClient("客户端2"));
+        executorService.submit(new ZkConfigClient("客户端3"));
     }
 }

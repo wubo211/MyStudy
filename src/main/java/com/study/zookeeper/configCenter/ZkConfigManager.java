@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class ZkConfigManager {
     private String nodePath = "/commConfig";
     private CommonConfig commonConfig;
-    private ZkClient zkClient = new ZkClient("127.0.0.1:2181");
+    private ZkClient zkClient = new ZkClient("192.168.28.127:2181");
 
     public CommonConfig initConfig(CommonConfig commonConfig){
         if (commonConfig == null){
