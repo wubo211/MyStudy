@@ -2,6 +2,7 @@ package com.study.zookeeper.distributedLock;
 
 import org.I0Itec.zkclient.IZkDataListener;
 import org.I0Itec.zkclient.ZkClient;
+import org.I0Itec.zkclient.exception.ZkNodeExistsException;
 import org.apache.zookeeper.CreateMode;
 
 import java.util.Collections;
@@ -22,9 +23,14 @@ public class DistributedLock {
 
     public DistributedLock() {
         zkClient = new ZkClient("192.168.28.127:2181");
-        /*if (!zkClient.exists(LOCK_NODE)){
-            zkClient.create(LOCK_NODE,"分布式锁节点", CreateMode.PERSISTENT);
-        }*/
+        if (!zkClient.exists(LOCK_NODE)){
+            try {
+                zkClient.create(LOCK_NODE,"分布式锁节点", CreateMode.PERSISTENT);
+            }catch (ZkNodeExistsException e){
+                e.printStackTrace();
+            }
+
+        }
     }
 
     public String getLock(){
