@@ -1,5 +1,6 @@
 package com.study.zookeeper.distributedLock;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -10,16 +11,21 @@ import java.util.concurrent.TimeUnit;
 public class MyTask implements Runnable {
     @Override
     public void run() {
-        DistributedLock lock = new DistributedLock();
-        String lockName = lock.getLock();
-        try {
-            TimeUnit.SECONDS.sleep(3);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        System.out.println(Thread.currentThread().getName()+"开始执行任务");
+        for (int i = 0 ;i<10;i++){
+            DistributedLock lock = new DistributedLock();
+            String lockName = lock.getLock();
+            try {
+                Random random = new Random();
+                TimeUnit.SECONDS.sleep(random.nextInt(10));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (lockName != null){
+                lock.releaseLock(lockName);
+            }
+            lock.closeZkClient();
         }
-        if (lockName != null){
-            lock.releaseLock(lockName);
-        }
-        lock.closeZkClient();
+
     }
 }

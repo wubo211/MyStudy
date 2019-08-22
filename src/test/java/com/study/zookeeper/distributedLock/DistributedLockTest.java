@@ -16,10 +16,12 @@ import static org.junit.Assert.*;
 public class DistributedLockTest {
 
     @Test
-    public void getLock() {
+    public void getLock() throws InterruptedException {
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         for (int i = 0 ;i<10;i++){
-            executorService.submit(new MyTask());
+            executorService.execute(new MyTask());
         }
+
+        Thread.sleep(100000);
     }
 }

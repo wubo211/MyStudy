@@ -22,9 +22,9 @@ public class DistributedLock {
 
     public DistributedLock() {
         zkClient = new ZkClient("192.168.28.127:2181");
-        if (!zkClient.exists(LOCK_NODE)){
+        /*if (!zkClient.exists(LOCK_NODE)){
             zkClient.create(LOCK_NODE,"分布式锁节点", CreateMode.PERSISTENT);
-        }
+        }*/
     }
 
     public String getLock(){
@@ -37,7 +37,7 @@ public class DistributedLock {
 
     public Boolean acquireLock(String lockName){
         List<String> children = zkClient.getChildren(LOCK_NODE);
-        System.out.println(Thread.currentThread().getName()+"获取所有子节点:"+children);
+        //System.out.println(Thread.currentThread().getName()+"获取所有子节点:"+children);
         Collections.sort(children, new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
@@ -46,15 +46,15 @@ public class DistributedLock {
         });
 
         int lockPostion = children.indexOf(lockName.split("/")[lockName.split("/").length - 1]);
-        System.out.println(Thread.currentThread().getName()+"获取所有子节点:"+children);
+        //System.out.println(Thread.currentThread().getName()+"获取所有子节点:"+children);
         if (lockPostion < 0 ){
-            System.out.println(Thread.currentThread().getName()+"节点不存在:"+lockName);
+            //System.out.println(Thread.currentThread().getName()+"节点不存在:"+lockName);
             getLock();
         }else if (lockPostion == 0){
             System.out.println(Thread.currentThread().getName()+"获取锁:"+lockName);
             return true;
         }else if (lockPostion > 0){
-            System.out.println(Thread.currentThread().getName()+"未获取到锁，等待:"+lockName);
+            //System.out.println(Thread.currentThread().getName()+"未获取到锁，等待:"+lockName);
 
             final CountDownLatch latch = new CountDownLatch(1);
 
