@@ -16,11 +16,11 @@ public class FirstValidator implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         logger.info("{} 线程开始执行",Thread.currentThread().getName());
-        Thread.sleep(1000);
+        Thread.sleep(5000);
         Random random = new Random();
         int i = random.nextInt(10);
         if (i < 5){
-            throw new RuntimeException(Thread.currentThread().getName()+"抛出异常");
+            throw new Exception(Thread.currentThread().getName()+"抛出异常");
         }
         return i;
     }
