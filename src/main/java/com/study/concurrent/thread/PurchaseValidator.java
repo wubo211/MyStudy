@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Description：
@@ -19,6 +20,8 @@ public class PurchaseValidator {
 
 
     public void test() throws InterruptedException, ExecutionException {
+        ThreadFactoryBuilder threadFactoryBuilder =  new ThreadFactoryBuilder();
+        ThreadFactory threadFactory = threadFactoryBuilder.setNamePrefix("purchase-").setThreadNumber(new AtomicInteger(1)).build();
         try {
             Random random = new Random();
             List<Integer> skuList = new ArrayList<>();
