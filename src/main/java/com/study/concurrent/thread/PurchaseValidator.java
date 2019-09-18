@@ -1,7 +1,10 @@
 package com.study.concurrent.thread;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.*;
 
 /**
@@ -9,64 +12,36 @@ import java.util.concurrent.*;
  * @Author： wub
  * @Date： 2019/9/17 19:46
  **/
+@Component
 public class PurchaseValidator {
-    private ExecutorService executorService = new ThreadPoolExecutor(2,2,0L,
-            TimeUnit.MILLISECONDS,new ArrayBlockingQueue<>(1),new MyThreadFactory());
+    private ExecutorService executorService = new ThreadPoolExecutor(3,10,0L,
+            TimeUnit.MILLISECONDS,new ArrayBlockingQueue<>(20),new MyThreadFactory());
 
-    public ExecutorService getExecutorService() {
-        return executorService;
-    }
 
-    public void setExecutorService(ExecutorService executorService) {
-        this.executorService = executorService;
-    }
-
-    public static void main(String[] args){
-        System.out.println("开始..........");
-
+    public void test() throws InterruptedException, ExecutionException {
         try {
-            test();
-        } catch (InterruptedException e) {
-            System.out.println("InterruptedException 异常111111");
-        } catch (ExecutionException e) {
-            System.out.println("ExecutionException 异常111111");
-        }
-        System.out.println("结束..........");
+            Random random = new Random();
+            List<Integer> skuList = new ArrayList<>();
+            for (int i= 0;i<3;i++){
+                skuList.add(random.nextInt(10));
+            }
+            List<FutureTask<Boolean>> list = new ArrayList();
+            for (Integer skuId : skuList){
+                FutureTask<Boolean> task = new FutureTask<Boolean>(new FirstValidator(skuId));
+                list.add(task);
+                executorService.submit(task);
+            }
 
-
-    }
-
-    public static void test() throws InterruptedException, ExecutionException {
-        PurchaseValidator purchaseValidator = new PurchaseValidator();
-        ExecutorService executorService = purchaseValidator.getExecutorService();
-
-        try {
-            System.out.println(Thread.currentThread().getName()+"开始");
-            FutureTask<Integer> task1 = new FutureTask<Integer>(new FirstValidator());
-            FutureTask<Integer> task2 = new FutureTask<Integer>(new FirstValidator());
-            FutureTask<Integer> task3 = new FutureTask<Integer>(new FirstValidator());
-            executorService.submit(task1);
-            executorService.submit(task2);
-            executorService.submit(task3);
-
-
-            List<FutureTask<Integer>> list = new ArrayList();
-            list.add(task1);
-            list.add(task2);
-            list.add(task3);
-            List<Integer> results = new ArrayList<>();
-            for (FutureTask<Integer> task : list){
-                try {
-                    results.add(task.get());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
+            List<Boolean> results = new ArrayList<>();
+            for (FutureTask<Boolean> task : list){
+                Boolean integer = task.get();
+                System.out.println("获取返回值:"+integer);
+                results.add(integer);
             }
 
 
-            for (Integer integer : results){
+            System.out.println("结果数量:"+results.size());
+            for (Boolean integer : results){
                 System.out.println("结果:"+integer);
             }
             System.out.println(Thread.currentThread().getName()+"结束");
