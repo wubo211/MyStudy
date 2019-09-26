@@ -1,6 +1,12 @@
 package com.study.desion;
 
 import com.study.desion.builder.Product;
+import com.study.desion.proxy.Dog;
+import com.study.desion.proxy.GunDog;
+import com.study.desion.proxy.MyInvocationHandler;
+import com.study.desion.proxy.ProxyDog;
+
+import java.lang.reflect.Proxy;
 
 /**
  * @Description：
@@ -9,7 +15,14 @@ import com.study.desion.builder.Product;
  **/
 public class MyTest {
     public static void main(String[] args) {
-        Product product1 = new Product.Builder().setId(123).setName("京东").setPrice(10000000).setType(123).build();
-        System.out.println(product1.toString());
+        Dog gunDog = new GunDog();
+        MyInvocationHandler invocationHandler = new MyInvocationHandler(gunDog);
+        Dog dog = (Dog)Proxy.newProxyInstance(gunDog.getClass().getClassLoader(), new Class[]{Dog.class}, invocationHandler);
+        dog.info();
+        dog.run();
+        Dog proxyDog = new ProxyDog(gunDog);
+        proxyDog.info();
+        proxyDog.run();
+
     }
 }
