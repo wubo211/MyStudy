@@ -5,6 +5,8 @@ import com.study.desion.proxy.Dog;
 import com.study.desion.proxy.GunDog;
 import com.study.desion.proxy.MyInvocationHandler;
 import com.study.desion.proxy.ProxyDog;
+import com.study.first.Car;
+import com.study.first.Track;
 
 import java.lang.reflect.Proxy;
 
@@ -15,14 +17,21 @@ import java.lang.reflect.Proxy;
  **/
 public class MyTest {
     public static void main(String[] args) {
-        Dog gunDog = new GunDog();
+        /*Dog gunDog = new GunDog();
         MyInvocationHandler invocationHandler = new MyInvocationHandler(gunDog);
         Dog dog = (Dog)Proxy.newProxyInstance(gunDog.getClass().getClassLoader(), new Class[]{Dog.class}, invocationHandler);
         dog.info();
         dog.run();
         Dog proxyDog = new ProxyDog(gunDog);
         proxyDog.info();
-        proxyDog.run();
+        proxyDog.run();*/
+
+        Track track = new Track();
+        track.setColor("red");
+
+        Car car = track;
+
+        System.out.println(car.getColor());
 
     }
 }
