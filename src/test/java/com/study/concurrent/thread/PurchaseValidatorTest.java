@@ -1,11 +1,13 @@
 package com.study.concurrent.thread;
 
+import com.study.spring.SingletonBean;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.annotation.Resource;
 import java.util.concurrent.ExecutionException;
 
 
@@ -21,6 +23,9 @@ public class PurchaseValidatorTest {
     @Autowired
     private PurchaseValidator purchaseValidator;
 
+    @Autowired
+    private SingletonBean singletonBean;
+
     @Test
     public void testThread() {
         System.out.println("开始..........");
@@ -33,5 +38,13 @@ public class PurchaseValidatorTest {
             System.out.println("ExecutionException 异常111111");
         }
         System.out.println("结束..........");
+    }
+
+    @Test
+    public void protoTypeTest(){
+        for (int i = 0 ;i< 5;i++){
+            singletonBean.say();
+        }
+
     }
 }
