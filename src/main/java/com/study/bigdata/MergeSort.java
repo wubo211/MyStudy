@@ -13,19 +13,19 @@ public class MergeSort {
     //多少条拆分一个文件
     private  static final int SPLIT_SIZE=13;
     //拆分后小文件保存目录
-    private static final String SPLIT_DIR="D:\\gyf-apple\\test";
+    private static final String SPLIT_DIR="/Users/apple/Documents/test/split";
     //小文件编号
     private int fileNum = 0;
     //
     private static final String prefix = "bigdata_";
     //小文件归并大文件后的文件路径
-    private String outFile="D:\\gyf-apple\\test\\result.txt";
+    private String outFile="/Users/apple/Documents/test/result.txt";
 
     public static void main(String[] args) throws FileNotFoundException,IOException {
         MergeSort ms = new MergeSort();
 
         //大文件拆分小文件方法
-        //ms.splitFile("D:\\gyf-apple\\test.txt");
+        ms.splitFile("/Users/apple/Documents/test/test.txt");
         //小文件归并为大文件并且排序
         ms.mergeFile();
     }
@@ -107,6 +107,7 @@ public class MergeSort {
                     //把结果写入大文件中
                     br.write(fileInfo.getCurNum() + "\r\n");
                 }
+                phoneNumberSet.add(fileInfo.getCurNum());
                 //移动指针
                 fileInfo.readNext();
                 //排序
