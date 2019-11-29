@@ -97,13 +97,16 @@ public class MergeSort {
         }
         //归并排序
         Collections.sort(list);
+        Set<Integer> phoneNumberSet = new HashSet<>(10000);
         //结果：归并到大文件
         try(BufferedWriter br = new BufferedWriter(new FileWriter(outFile))){
             while (!list.isEmpty()){
                 //取出排序结果的第一个元素
                 FileInfo fileInfo = list.get(0);
-                //把结果写入大文件中
-                br.write(fileInfo.getCurNum() + "\r\n");
+                if (!phoneNumberSet.contains(fileInfo.getCurNum())){
+                    //把结果写入大文件中
+                    br.write(fileInfo.getCurNum() + "\r\n");
+                }
                 //移动指针
                 fileInfo.readNext();
                 //排序

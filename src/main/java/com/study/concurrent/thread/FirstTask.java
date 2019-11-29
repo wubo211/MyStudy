@@ -10,7 +10,6 @@ public class FirstTask implements Runnable {
 
     private int a;
     private int b;
-
     public FirstTask(int a, int b) {
         this.a = a;
         this.b = b;
@@ -23,4 +22,5 @@ public class FirstTask implements Runnable {
              a = 5/0;
         }
     }
+    
 }
