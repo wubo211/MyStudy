@@ -15,7 +15,9 @@ public abstract class SingletonBean {
     public abstract IProtoTypeBean getBean();
 
     public void say(){
-        System.out.println("protoTypeBean hashCode:"+getBean().hashCode());
-        getBean().print();
+        IProtoTypeBean bean = getBean();
+        System.out.println("protoType bean name:"+bean.getClass().getName());
+        System.out.println("protoType bean hashCode:"+bean.hashCode());
+        bean.print();
     }
 }
