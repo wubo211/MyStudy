@@ -25,7 +25,6 @@ public class ProtoTypeTest {
             System.out.println("Singleton bean name:"+name);
             System.out.println("Singleton bean hashCode:"+singletonBean.hashCode());
             singletonBean.say();
-
         }
 
     }
