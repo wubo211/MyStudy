@@ -16,17 +16,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ProtoTypeTest {
 
     @Autowired
-    SingletonBean singletonBean;
+    SingletonBeanA singletonBean;
 
     @Test
     public void test(){
-        for (int i = 0 ;i<10;i++){
-            String name = singletonBean.getClass().getName();
-            System.out.println("Singleton bean name:"+name);
-            System.out.println("Singleton bean hashCode:"+singletonBean.hashCode());
+        long start = System.currentTimeMillis();
+        for (int i = 0 ;i<10000;i++){
             singletonBean.say();
         }
+        long end = System.currentTimeMillis();
 
+        System.out.println(end-start);
     }
-
+//1465
 }

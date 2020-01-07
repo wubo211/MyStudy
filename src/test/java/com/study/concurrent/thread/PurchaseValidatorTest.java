@@ -1,13 +1,12 @@
 package com.study.concurrent.thread;
 
-import com.study.spring.SingletonBean;
+import com.study.spring.SingletonBeanA;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.annotation.Resource;
 import java.util.concurrent.ExecutionException;
 
 
@@ -24,7 +23,7 @@ public class PurchaseValidatorTest {
     private PurchaseValidator purchaseValidator;
 
     @Autowired
-    private SingletonBean singletonBean;
+    private SingletonBeanA singletonBean;
 
     @Test
     public void testThread() {

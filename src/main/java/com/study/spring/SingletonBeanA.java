@@ -9,15 +9,13 @@ import org.springframework.stereotype.Component;
  * @Date： 2019/11/18 15:23
  **/
 @Component
-public abstract class SingletonBean {
+public abstract class SingletonBeanA {
 
     @Lookup
     public abstract IProtoTypeBean getBean();
 
     public void say(){
         IProtoTypeBean bean = getBean();
-        System.out.println("protoType bean name:"+bean.getClass().getName());
-        System.out.println("protoType bean hashCode:"+bean.hashCode());
         bean.print();
     }
 }
