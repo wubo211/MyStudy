@@ -36,9 +36,7 @@ public class ProtoTypeTest {
 
     @Test
     public void aspect(){
-        son.playGames();
         son.doHomeWork("math");
-        son.watchTv();
     }
 
 }
