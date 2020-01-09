@@ -1,5 +1,7 @@
 package com.study.spring;
 
+import com.study.spring.aop.Son;
+import org.aspectj.lang.annotation.Aspect;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class ProtoTypeTest {
     @Autowired
     SingletonBeanA singletonBean;
 
+    @Autowired
+    private Son son;
+
     @Test
     public void test(){
         long start = System.currentTimeMillis();
@@ -28,5 +33,12 @@ public class ProtoTypeTest {
 
         System.out.println(end-start);
     }
-//1465
+
+    @Test
+    public void aspect(){
+        son.playGames();
+        son.doHomeWork("math");
+        son.watchTv();
+    }
+
 }
